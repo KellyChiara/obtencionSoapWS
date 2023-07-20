@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Form1'
-  ClientHeight = 298
-  ClientWidth = 631
+  ClientHeight = 328
+  ClientWidth = 745
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -20,43 +20,51 @@ object Form1: TForm1
     Height = 13
     Caption = 'Label1'
   end
-  object verificaConexionBtn: TButton
-    Left = 8
-    Top = 105
-    Width = 81
-    Height = 32
-    Caption = 'verificaCon'
-    TabOrder = 0
-    OnClick = verificaConexionBtnClick
-  end
-  object getCuisBtn: TButton
-    Left = 112
-    Top = 106
-    Width = 81
-    Height = 29
-    Caption = 'cuis'
-    TabOrder = 1
-    OnClick = getCuisBtnClick
-  end
   object Memo1: TMemo
-    Left = 240
-    Top = 16
-    Width = 383
-    Height = 257
-    Lines.Strings = (
-      '')
-    TabOrder = 2
+    Left = 152
+    Top = 8
+    Width = 585
+    Height = 312
+    TabOrder = 0
   end
-  object Button1: TButton
-    Left = 40
-    Top = 208
+  object procesoUnificado: TButton
+    Left = 24
+    Top = 112
+    Width = 115
+    Height = 33
+    Caption = 'SoapProcess'
+    TabOrder = 1
+    OnClick = procesoUnificadoClick
+  end
+  object sincronizacionCodigoBtn: TButton
+    Left = 24
+    Top = 168
+    Width = 115
+    Height = 25
+    Caption = 'Sincronizacion cod'
+    TabOrder = 2
+    OnClick = sincronizacionCodigoBtnClick
+  end
+  object firmadoXmlBtn: TButton
+    Left = 24
+    Top = 214
+    Width = 115
+    Height = 25
+    Caption = 'firmadoEjemplo'
+    TabOrder = 3
+    OnClick = firmadoXmlBtnClick
+  end
+  object shaGZIP: TButton
+    Left = 24
+    Top = 248
     Width = 75
     Height = 25
-    Caption = 'Button1'
-    TabOrder = 3
+    Caption = 'shaGZIP'
+    TabOrder = 4
+    OnClick = shaGZIPClick
   end
-  object HTTPRIO1: THTTPRIO
-    OnAfterExecute = HTTPRIO1AfterExecute
+  object CodigosFact: THTTPRIO
+    OnAfterExecute = CodigosFactAfterExecute
     WSDLLocation = 
       'https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionCodig' +
       'os?wsdl'
@@ -64,14 +72,44 @@ object Form1: TForm1
     Port = 'ServicioFacturacionCodigosPort'
     HTTPWebNode.OnBeforePost = HTTPRIO1HTTPWebNode1BeforePost
     Converter.Options = [soSendMultiRefObj, soTryAllSchema, soRootRefNodesToBody, soCacheMimeResponse, soUTF8EncodeXML]
-    Left = 40
-    Top = 48
+    Left = 184
+    Top = 32
   end
   object HTTPReqResp1: THTTPReqResp
     URL = 
       'https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionCodig' +
       'os?wsdl'
-    Left = 104
+    Left = 96
     Top = 48
+  end
+  object SincronizacionCatalogos: THTTPRIO
+    OnAfterExecute = SincronizacionCatalogosAfterExecute
+    WSDLLocation = 
+      'https://pilotosiatservicios.impuestos.gob.bo/v2/FacturacionSincr' +
+      'onizacion?wsdl'
+    Service = 'ServicioFacturacionSincronizacion'
+    Port = 'ServicioFacturacionSincronizacionPort'
+    HTTPWebNode.OnBeforePost = HTTPRIO2HTTPWebNode1BeforePost
+    Converter.Options = [soSendMultiRefObj, soTryAllSchema, soRootRefNodesToBody, soCacheMimeResponse, soUTF8EncodeXML]
+    Left = 272
+    Top = 80
+  end
+  object sbxXMLSigner1: TsbxXMLSigner
+    HashAlgorithm = 'SHA256'
+    InputFile = 'factura/factura.xml'
+    OutputFile = 'factura/facturafimada.xml'
+    Left = 240
+    Top = 184
+  end
+  object CompraVenta: THTTPRIO
+    OnAfterExecute = CompraVentaAfterExecute
+    WSDLLocation = 
+      'https://pilotosiatservicios.impuestos.gob.bo/v2/ServicioFacturac' +
+      'ionCompraVenta?wsdl'
+    Service = 'ServicioFacturacion'
+    Port = 'ServicioFacturacionPort'
+    Converter.Options = [soSendMultiRefObj, soTryAllSchema, soRootRefNodesToBody, soCacheMimeResponse, soUTF8EncodeXML]
+    Left = 368
+    Top = 32
   end
 end
